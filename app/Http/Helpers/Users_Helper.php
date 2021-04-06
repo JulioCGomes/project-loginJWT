@@ -93,6 +93,63 @@ class Users_Helper
     }
 
     /**
+     * Atualizando dados do usuário.
+     *
+     * @param array $param
+     * @param integer $idUsuario
+     * @return Array
+     */
+    public static function atualizarUsuario(array $param, int $idUsuario) : Array 
+    {
+        if (empty($idUsuario)) {
+            throw new \Exception('Informa o id do usuário.');
+        }
+
+        if (empty($param)) {
+            throw new \Exception('Informa os dados para atualização.');
+        }
+
+        $usuario = User::find($idCategoria);
+
+        if (empty($usuario)) {
+            throw new \Exception('Usuário não encontrado.');
+        }
+
+        $usuario->name = $param['nome'];
+        $usuario->email = $param['email'];
+        if ($param['password']) {
+            $usuario->password = Hash::make($param['password']);
+        }
+
+        $usuario->Update();
+
+        return $usuario;
+    }
+
+    /**
+     * Deletando usuario do sistema.
+     *
+     * @param integer $idUsuario
+     * @return Array
+     */
+    public static function deletarUsuario(int $idUsuario) : String 
+    {
+        if (empty($idUsuario)) {
+            throw new \Exception('Informa o id do usuário.');
+        }
+
+        $usuario = User::find($idCategoria);
+
+        if (empty($usuario)) {
+            throw new \Exception('Usuário não encontrado.');
+        }
+
+        $usuario->Delete();
+
+        return 'Usuário deletado';
+    }
+
+    /**
      * Atualizando token do usuário.
      *
      * @return void

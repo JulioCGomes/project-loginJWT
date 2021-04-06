@@ -47,4 +47,9 @@ Route::middleware(['jwt.auth'])->group(function () {
      * Rota para atualizar o token do usuário.
      */
     Route::post('auth-refresh', [UserController::class, 'refreshToken']);
+
+    /**
+     * Rota para atualizar usuário.
+     */
+    Route::put('users/update/{id}', [UserController::class, 'update']);
 });

@@ -116,13 +116,43 @@ class UserController extends Controller
         }
     }
 
-    public function update(Request $params, $idCategory) : Array
+    /**
+     * Atualizando contato do usuário.
+     *
+     * @param Request $params
+     * @param [type] $idUsuario
+     * @return Array
+     */
+    public function update(Request $params, $idUsuario) : Array
     {
         try {
             return [
                 'status' => 201,
-                'data' => Users_Helper::atualizarCategoria($params->all(), $idCategory),
-                'msg' => 'Categoria atualizada com sucesso.'
+                'data' => Users_Helper::atualizarUsuario($params->all(), $idUsuario),
+                'msg' => 'Usuario atualizada com sucesso.'
+            ];
+        } catch (\Exception $e) {
+            return [
+                'status' => 500,
+                'msg' => $e->getMessage(),
+            ];
+        }
+    }
+
+    /**
+     * Deletando usuario do sistema.
+     *
+     * @param Request $params
+     * @param [type] $idUsuario
+     * @return Array
+     */
+    public function delete($idUsuario) : Array
+    {
+        try {
+            return [
+                'status' => 201,
+                'data' => Users_Helper::deletarUsuario($idUsuario),
+                'msg' => 'Usuario deletado com sucesso.'
             ];
         } catch (\Exception $e) {
             return [
