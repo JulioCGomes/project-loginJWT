@@ -177,6 +177,10 @@ return [
         App\Providers\FortifyServiceProvider::class,
         App\Providers\JetstreamServiceProvider::class,
 
+        /**
+         * JWT: https://github.com/tymondesigns/jwt-auth
+         */
+        Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
     ],
 
     /*
@@ -230,6 +234,10 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
+        /**
+         * JWT: https://github.com/tymondesigns/jwt-auth
+         */
+        'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class
     ],
 
 ];

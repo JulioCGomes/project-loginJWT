@@ -19,4 +19,32 @@ use App\Http\Controllers\Api\UserController;
 //     return $request->user();
 // });
 
-Route::get('users', [UserController::class, 'index']);
+/**
+ * Rota para criar o usuário.
+ */
+Route::post('users/create', [UserController::class, 'create']);
+
+/**
+ * Rota para Login do usuário.
+ */
+Route::post('auth', [UserController::class, 'login']);
+
+/**
+ * Bloqueando essas rotas, somente com token válido
+ */
+Route::middleware(['jwt.auth'])->group(function () {
+    /**
+     * Rota de listagem de usuário.
+     */
+    Route::get('users', [UserController::class, 'index']);
+
+    /**
+     * Retornando os dados do usuário logado.
+     */
+    Route::get('me', [UserController::class, 'userLogado']);
+
+    /**
+     * Rota para atualizar o token do usuário.
+     */
+    Route::post('auth-refresh', [UserController::class, 'refreshToken']);
+});

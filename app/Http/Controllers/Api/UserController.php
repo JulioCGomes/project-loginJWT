@@ -10,7 +10,71 @@ use App\Http\Helpers\Users_Helper;
 class UserController extends Controller
 {
     /**
-     * Undocumented function
+     * Login do usuário ao sistema.
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function login(Request $request)
+    {
+        try {
+            return [
+                'status' => 200,
+                'data' => Users_Helper::loginUsuario($request),
+                'msg' => 'Listagem de usuário feita com sucesso.',
+            ];
+        } catch (\Exception $e) {
+            return [
+                'status' => 500,
+                'msg' => $e->getMessage(),
+            ];
+        }
+    }
+
+    /**
+     * Retornando o usuário logado dentro do sistema.
+     *
+     * @return void
+     */
+    public function userLogado()
+    {
+        try {
+            return [
+                'status' => 200,
+                'data' => Users_Helper::getUsuarioLogado(),
+                'msg' => 'Usuário logado retornado com sucesso.',
+            ];
+        } catch (\Exception $e) {
+            return [
+                'status' => 500,
+                'msg' => $e->getMessage(),
+            ];
+        }
+    }
+
+    /**
+     * Atualizando token do usuário.
+     *
+     * @return void
+     */
+    public function refreshToken()
+    {
+        try {
+            return [
+                'status' => 200,
+                'data' => Users_Helper::atualizarToken(),
+                'msg' => 'Token do usuário atualizado com sucesso.',
+            ];
+        } catch (\Exception $e) {
+            return [
+                'status' => 500,
+                'msg' => $e->getMessage(),
+            ];
+        }
+    }
+
+    /**
+     * Listagem dos usuários que existem dentro do sistema.
      *
      * @return void
      */
@@ -31,47 +95,40 @@ class UserController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Criando o usuário
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $params
+     * @return Array
      */
-    public function store(Request $request)
+    public function create(Request $params) : Array
     {
-        //
+        try {
+            return [
+                'status' => 201,
+                'data' => Users_Helper::adicionarUsuario($params->all()),
+                'msg' => 'Usuário criado com sucesso.'
+            ];
+        } catch (\Exception $e) {
+            return [
+                'status' => 500,
+                'msg' => $e->getMessage(),
+            ];
+        }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function update(Request $params, $idCategory) : Array
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        try {
+            return [
+                'status' => 201,
+                'data' => Users_Helper::atualizarCategoria($params->all(), $idCategory),
+                'msg' => 'Categoria atualizada com sucesso.'
+            ];
+        } catch (\Exception $e) {
+            return [
+                'status' => 500,
+                'msg' => $e->getMessage(),
+            ];
+        }
     }
 }
